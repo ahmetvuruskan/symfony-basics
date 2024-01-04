@@ -11,6 +11,10 @@
         {% endblock %}
     </head>
     <body>
+    <h1>Welcome to symfony</h1>
+    {% for message in app.flashes('success') %}
+        <div style="color: green">{{ message }}</div>
+    {% endfor %}
         {% block body %}{% endblock %}
     </body>
 </html>
