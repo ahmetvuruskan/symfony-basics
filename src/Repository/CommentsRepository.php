@@ -21,6 +21,16 @@ class CommentsRepository extends ServiceEntityRepository
         parent::__construct($registry, Comments::class);
     }
 
+    public function add(Comments $entity,bool $flush=false)
+    {
+        $entityManager =$this->getEntityManager();
+        $entityManager->persist($entity);
+
+        if ($flush){
+            $entityManager->flush();
+        }
+    }
+
 //    /**
 //     * @return Comments[] Returns an array of Comments objects
 //     */

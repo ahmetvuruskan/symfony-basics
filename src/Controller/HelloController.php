@@ -6,6 +6,7 @@ use App\Entity\Comments;
 use App\Entity\MicroPost;
 use App\Entity\User;
 use App\Entity\UserProfile;
+use App\Repository\CommentsRepository;
 use App\Repository\MicroPostRepository;
 use App\Repository\UserProfileRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -23,17 +24,25 @@ class HelloController extends AbstractController
 
 
     #[Route('/{limit<\d+>?3}', name: 'app_index', methods: ['GET'])]
-    public function index(MicroPostRepository $posts): Response
+    public function index(MicroPostRepository $posts, CommentsRepository $comments): Response
     {
-
-        $post = new MicroPost();
-        $comment = new Comments();
-        $post->setTitle("Hello");
-        $post->setText("Hello");
-        $post->setCreated(new \DateTime());
-        $comment->setText("Demo Comment");
-        $post->addComment($comment);
+        $post = $posts->find(22);
+        $comment = $post->getComments()[0];
+        $post->removeComment($comment);
         $posts->add($post,true);
+
+
+
+//        $post = new MicroPost();
+//        $comment = new Comments();
+//        $post->setTitle("Hello");
+//        $post->setText("Hello");
+//        $post->setCreated(new \DateTime());
+//        $comment->setText("Demo Comment");
+//        $comment->setMicroPost($post);
+//        $comments->add($comment,true);
+//        $post->addComment($comment);
+//        $posts->add($post,true);
 //        $user = new User();
 //        $user->setEmail("ahmetfatih0702@gmail.com");
 //        $user->setPassword("12345678");
